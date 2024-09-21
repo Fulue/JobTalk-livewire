@@ -19,6 +19,8 @@ return new class extends Migration
             $table->enum('status', ['processed', 'pending'])->default('pending');
 
             $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('profession_id')->nullable()->constrained();
+            $table->foreignUuid('level_id')->nullable()->constrained();
 
             $table->timestamps();
             $table->softDeletes();

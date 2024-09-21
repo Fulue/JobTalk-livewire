@@ -23,7 +23,9 @@ class VideoResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('uuid')
+                Forms\Components\TextInput::make('id')
+                    ->hiddenOn('create')
+                    ->disabled()
                     ->label('UUID')
                     ->required(),
                 Forms\Components\TextInput::make('name')

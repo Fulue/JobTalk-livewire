@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,7 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Question extends Model
 {
     use HasFactory;
-    use HasUlids;
+    use HasUuids;
     use SoftDeletes;
 
     protected $fillable = ['question'];
@@ -51,6 +53,7 @@ class Question extends Model
         return $this->hasMany(Timestamp::class);
     }
 
+
     /**
      * Связь вопроса с тегами (многие ко многим)
      *
@@ -59,5 +62,15 @@ class Question extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'question_tag');
+    }
+
+    /**
+     * Связь вопроса с профессией (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function profession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class);
     }
 }

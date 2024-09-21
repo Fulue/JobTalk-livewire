@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\AnswerResource\Pages;
-use App\Filament\Resources\AnswerResource\RelationManagers;
-use App\Models\Answer;
+use App\Filament\Resources\ProfessionResource\Pages;
+use App\Filament\Resources\ProfessionResource\RelationManagers;
+use App\Models\Profession;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,23 +13,17 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class AnswerResource extends Resource
+class ProfessionResource extends Resource
 {
-    protected static ?string $model = Answer::class;
+    protected static ?string $model = Profession::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
-                Forms\Components\TextInput::make('answer')
-                    ->required(),
-                Forms\Components\Select::make('question_id')
-                    ->relationship('question', 'uuid')
+                Forms\Components\TextInput::make('name')
                     ->required(),
             ]);
     }
@@ -38,14 +32,11 @@ class AnswerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('uuid')
-                    ->label('UUID')
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('answer')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('question.uuid')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -82,9 +73,9 @@ class AnswerResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAnswers::route('/'),
-            'create' => Pages\CreateAnswer::route('/create'),
-            'edit' => Pages\EditAnswer::route('/{record}/edit'),
+            'index' => Pages\ListProfessions::route('/'),
+            'create' => Pages\CreateProfession::route('/create'),
+            'edit' => Pages\EditProfession::route('/{record}/edit'),
         ];
     }
 }

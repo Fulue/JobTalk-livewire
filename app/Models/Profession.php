@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -20,8 +22,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Profession extends Model
 {
     use HasFactory;
-    use HasUlids;
+    use HasUuids;
     use SoftDeletes;
 
     protected $fillable = ['name'];
+    /**
+     * Связь вопроса с вопросами (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
+    }
 }

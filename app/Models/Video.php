@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,7 +29,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Video extends Model
 {
     use HasFactory;
-    use HasUlids;
+    use HasUuids;
     use SoftDeletes;
 
     protected $fillable = ['name', 'url', 'status', 'user_id'];

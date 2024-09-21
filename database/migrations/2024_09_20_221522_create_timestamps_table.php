@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timestamps', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->uuid('id')->primary();
 
             $table->time('start_time');
             $table->time('end_time');
 
-            $table->foreignId('video_id')->constrained();
-            $table->foreignId('question_id')->constrained();
+            $table->foreignUuid('video_id')->constrained();
+            $table->foreignUuid('question_id')->constrained();
 
             $table->timestamps();
             $table->softDeletes();

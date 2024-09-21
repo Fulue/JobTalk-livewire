@@ -2,19 +2,23 @@
 
 namespace App\Livewire;
 
+use App\DTO\ProfessionDTO;
+use App\Models\Profession;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Home extends Component
 {
-    public $name = 'name';
+    public array $professions = [];
 
-    public function kekee(){
-        dd($this->name);
+    public function mount(): void
+    {
+        $this->professions = ProfessionDTO::collect(Profession::query()->get())->toArray();
+        //dd($this->professions);
     }
 
     #[Title('Home')]
-    public function render()
+    public function render(): mixed
     {
         return view('livewire.home');
     }

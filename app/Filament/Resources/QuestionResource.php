@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Resources\AnswerResource\RelationManagers\AnswersRelationManager;
+use App\Filament\Resources\ProfessionResource\RelationManagers\ProfessionsRelationManager;
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Filament\Resources\QuestionResource\RelationManagers;
 use App\Models\Question;
@@ -23,7 +25,9 @@ class QuestionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('uuid')
+                Forms\Components\TextInput::make('id')
+                    ->hiddenOn('create')
+                    ->disabled()
                     ->label('UUID')
                     ->required(),
                 Forms\Components\TextInput::make('question')
@@ -35,7 +39,7 @@ class QuestionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('uuid')
+                Tables\Columns\TextColumn::make('id')
                     ->label('UUID')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('question')
@@ -69,7 +73,7 @@ class QuestionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AnswersRelationManager::class,
         ];
     }
 

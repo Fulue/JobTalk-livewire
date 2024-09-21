@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('answers', function (Blueprint $table) {
-            $table->uuid()->primary();
+            $table->uuid('id')->primary();
 
             $table->string('answer');
 
-            $table->foreignId('question_id')->constrained();
+            $table->foreignUuid('question_id')->constrained();
 
             $table->timestamps();
             $table->softDeletes();

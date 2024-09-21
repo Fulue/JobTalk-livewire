@@ -6,6 +6,7 @@ use App\Filament\Resources\AnswerResource\RelationManagers\AnswersRelationManage
 use App\Filament\Resources\ProfessionResource\RelationManagers\ProfessionsRelationManager;
 use App\Filament\Resources\QuestionResource\Pages;
 use App\Filament\Resources\QuestionResource\RelationManagers;
+use App\Models\Profession;
 use App\Models\Question;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -32,6 +33,10 @@ class QuestionResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('question')
                     ->required(),
+                Forms\Components\Select::make('profession_id')
+                    ->label('Profession')
+                    ->options(Profession::all()->pluck('name', 'id'))
+                    ->searchable(),
             ]);
     }
 

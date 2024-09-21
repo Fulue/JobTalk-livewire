@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string $id
  * @property string $question
+ * @property string $profession_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -31,7 +31,10 @@ class Question extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['question'];
+    protected $fillable = [
+        'question',
+        'profession_id',
+    ];
 
     /**
      * Связь вопроса с ответами (один ко многим)

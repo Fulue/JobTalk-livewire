@@ -43,7 +43,7 @@
                                         {{ $profession['name'] }}
                                     </h3>
                                     <p class="text-sm text-gray-500 dark:text-neutral-500">
-                                        4 job positions
+                                        Вопросов - {{ $profession['count'] }}
                                     </p>
                                 </div>
                                 <div>

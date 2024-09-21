@@ -12,8 +12,30 @@ class ProfessionFactory extends Factory
 
     public function definition(): array
     {
+        $professions = [
+            'PHP-разработчик',
+            'Frontend-разработчик',
+            'Backend-разработчик',
+            'DevOps-инженер',
+            'Data Scientist',
+            'Мобильный разработчик',
+            'Full Stack разработчик',
+            'Системный администратор',
+            'Machine Learning инженер',
+            'Cloud инженер',
+            'UI/UX дизайнер',
+            'Инженер по безопасности',
+            'Аналитик данных',
+            'QA-инженер',
+            'Сетевой инженер',
+            'Scrum мастер',
+            'Продуктовый менеджер',
+            'Аналитик бизнес процессов',
+            'IoT-инженер',
+        ];
+
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->randomElement($professions), // Случайная профессия из списка
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

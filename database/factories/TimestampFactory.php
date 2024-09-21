@@ -21,7 +21,6 @@ class TimestampFactory extends Factory
             'updated_at' => Carbon::now(),
 
             'video_id' => Video::factory(),
-            'question_id' => Question::factory(),
         ];
     }
 }

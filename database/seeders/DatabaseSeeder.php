@@ -12,6 +12,7 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Video;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,6 +21,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Создание администратора
+        User::query()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@admin.ru',
+            'password' => Hash::make('Pa$$w0rd!'),
+        ]);
+
         // Создание пользователей
         User::factory(2)->create()->each(function ($user) {
             // Для каждого пользователя создаём 2 видео
@@ -43,10 +51,25 @@ class DatabaseSeeder extends Seeder
         });
 
         // Создание профессий
-        Profession::factory(5)->create()->each(fn($profession) => Question::factory(5)->create(['profession_id' => $profession->id]));
+        Profession::factory(8)->create()->each(function (Profession $profession) {
+            // Для каждого тега выбираем случайные вопросы и связываем их
+            $questions = Question::all();
+            foreach ($questions as $question) {
+                $question->profession_id = $profession->id;
+                $question->save();
+            }
+        });
+
 
         // Создание уровней
-        Level::factory(3)->create()->each(fn($level) => Question::factory(3)->create(['level_id' => $level->id]));
+        Level::factory(8)->create()->each(function (Level $level) {
+            // Для каждого тега выбираем случайные вопросы и связываем их
+            $questions = Question::all();
+            foreach ($questions as $question) {
+                $question->level_id = $level->id;
+                $question->save();
+            }
+        });
 
         // Создание тегов и присвоение тегов к вопросам
         Tag::factory(5)->create()->each(function ($tag) {

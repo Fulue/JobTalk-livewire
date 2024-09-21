@@ -21,6 +21,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
  *
+ * @property-read User $user
+ * @property-read Profession $profession
+ * @property-read Level $level
  * @property-read Answer[]|HasMany $answers
  * @property-read Timestamp[]|HasMany $timestamps
  * @property-read Tag[]|BelongsToMany $tags
@@ -75,5 +78,25 @@ class Question extends Model
     public function profession(): BelongsTo
     {
         return $this->belongsTo(Profession::class);
+    }
+
+    /**
+     * Связь вопроса с пользователем (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Связь вопроса с уровнем (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function level(): BelongsTo
+    {
+        return $this->belongsTo(Level::class);
     }
 }

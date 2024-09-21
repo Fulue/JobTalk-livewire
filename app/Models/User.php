@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,6 +11,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+/**
+ * Class User
+ *
+ * @property string $id
+ * @property string $name
+ * @property string $email
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ *
+ * @property-read Video[]|HasMany $videos
+ * @property-read Question[]|HasMany $questions
+ */
 class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
@@ -54,8 +68,23 @@ class User extends Authenticatable implements FilamentUser
         ];
     }
 
+    /**
+     * Связь пользователя с видео (один ко многим)
+     *
+     * @return HasMany
+     */
     public function videos(): HasMany
     {
         return $this->hasMany(Video::class);
+    }
+
+    /**
+     * Связь пользователя с вопросами (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function questions(): HasMany
+    {
+        return $this->hasMany(Question::class);
     }
 }

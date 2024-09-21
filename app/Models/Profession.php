@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $deleted_at
  *
  * @property-read Question[]|HasMany $questions
+ * @property-read Level[]|HasMany $levels
  */
 class Profession extends Model
 {
@@ -27,6 +28,7 @@ class Profession extends Model
     use SoftDeletes;
 
     protected $fillable = ['name'];
+
     /**
      * Связь вопроса с вопросами (один ко многим)
      *
@@ -35,5 +37,15 @@ class Profession extends Model
     public function questions(): HasMany
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * Связь вопроса с вопросами (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function levels(): HasMany
+    {
+        return $this->hasMany(Level::class);
     }
 }

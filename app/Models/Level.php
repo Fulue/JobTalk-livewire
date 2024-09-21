@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,11 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Level
  *
  * @property string $id
- * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- *
+ * @property string $level
+ * @property string $profession_id
+ * @property-read Video[]|HasMany $videos
  * @property-read Question[]|HasMany $questions
  */
 class Level extends Model
@@ -27,7 +23,17 @@ class Level extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['level', 'profession_id'];
+
+    /**
+     * Связь уровня с видео (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class);
+    }
 
     /**
      * Связь уровня с вопросами (один ко многим)

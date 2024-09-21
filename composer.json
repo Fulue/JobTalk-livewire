@@ -10,6 +10,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.5",
+        "postare/blade-mdi": "^1.0",
         "spatie/laravel-data": "^4.9"
     },
     "require-dev": {

@@ -11,6 +11,8 @@ class ProfessionDTO extends Data
         public string $id,
         public string $name,
         public int $count,
+        public string $icon,
+        public string $icon_color,
     ) {}
 
     public static function fromModel(Profession $profession): self
@@ -19,6 +21,8 @@ class ProfessionDTO extends Data
             id: $profession->id,
             name: $profession->name,
             count: $profession->questions->count(),
+            icon: $profession->icon,
+            icon_color: $profession->icon_color,
         );
     }
 }

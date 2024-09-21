@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         });
 
         // Создание профессий
-        $profession = Profession::factory(8)->create();
+        $profession = Profession::factory(10)->create();
         $level = Level::factory(3)->create();
 
         $questions = Question::all();

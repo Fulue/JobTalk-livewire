@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
             // Для каждого видео создаём таймкоды и вопросы
             $videos->each(function ($video) {
-                $questions = Question::factory(10)->create(['user_id' => $video->user_id]);
+                $questions = Question::factory(15)->create(['user_id' => $video->user_id]);
 
                 // Для каждого вопроса создаём таймкоды
                 $questions->each(function ($question) use ($video) {

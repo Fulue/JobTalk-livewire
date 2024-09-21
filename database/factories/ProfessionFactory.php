@@ -10,71 +10,50 @@ class ProfessionFactory extends Factory
 {
     protected $model = Profession::class;
 
+    // Массивы для профессий, иконок и цветов
+    protected static $professions = [
+        'C Разработчик' => ['icon' => 'mdi-language-c', 'color' => 'text-blue-600'],
+        'C++ Разработчик' => ['icon' => 'mdi-language-cpp', 'color' => 'text-green-600'],
+        'C# Разработчик' => ['icon' => 'mdi-language-csharp', 'color' => 'text-purple-600'],
+        'JavaScript Разработчик' => ['icon' => 'mdi-language-javascript', 'color' => 'text-yellow-500'],
+        'GO Разработчик' => ['icon' => 'mdi-language-go', 'color' => 'text-blue-500'],
+        'PHP Разработчик' => ['icon' => 'mdi-language-php', 'color' => 'text-indigo-600'],
+        'Python Разработчик' => ['icon' => 'mdi-language-python', 'color' => 'text-teal-500'],
+        'React Разработчик' => ['icon' => 'mdi-react', 'color' => 'text-sky-500'],
+        'Java Разработчик' => ['icon' => 'mdi-language-java', 'color' => 'text-red-500'],
+        'Vue.js Разработчик' => ['icon' => 'mdi-vuejs', 'color' => 'text-green-500'],
+        'Nuxt.js Разработчик' => ['icon' => 'mdi-nuxt', 'color' => 'text-green-400'],
+        'Laravel Разработчик' => ['icon' => 'mdi-laravel', 'color' => 'text-red-700'],
+        'Swift Разработчик' => ['icon' => 'mdi-language-swift', 'color' => 'text-orange-500'],
+        'Ruby Разработчик' => ['icon' => 'mdi-language-ruby', 'color' => 'text-red-600'],
+        'Rust Разработчик' => ['icon' => 'mdi-language-rust', 'color' => 'text-brown-600'],
+        'TypeScript Разработчик' => ['icon' => 'mdi-language-typescript', 'color' => 'text-blue-700']
+    ];
+
+    // Переменная для отслеживания уже использованных профессий
+    protected static $usedProfessions = [];
+
     public function definition(): array
     {
-        // Список профессий
-        $professions = [
-            'PHP-разработчик',
-            'Frontend-разработчик',
-            'Backend-разработчик',
-            'DevOps-инженер',
-            'Data Scientist',
-            'Мобильный разработчик',
-            'Full Stack разработчик',
-            'Системный администратор',
-            'Machine Learning инженер',
-            'Cloud инженер',
-            'UI/UX дизайнер',
-            'Инженер по безопасности',
-            'Аналитик данных',
-            'QA-инженер',
-            'Сетевой инженер',
-            'Scrum мастер',
-            'Продуктовый менеджер',
-            'Аналитик бизнес процессов',
-            'IoT-инженер',
-        ];
+        // Получаем оставшиеся профессии (те, что еще не использованы)
+        $availableProfessions = array_diff_key(self::$professions, self::$usedProfessions);
 
-        // Список иконок (используем библиотеку MDI как пример)
-        $icons = [
-            'mdi-laravel',
-            'mdi-react',
-            'mdi-php',
-            'mdi-database',
-            'mdi-cube',
-            'mdi-laptop',
-            'mdi-robot',
-            'mdi-server',
-            'mdi-cloud',
-            'mdi-pencil',
-            'mdi-lock',
-            'mdi-chart-line',
-            'mdi-flask',
-            'mdi-network',
-            'mdi-sitemap',
-            'mdi-chart-pie',
-            'mdi-bug',
-            'mdi-api',
-            'mdi-cellphone',
-        ];
+        // Если профессии закончились, сбрасываем массив использованных профессий
+        if (empty($availableProfessions)) {
+            self::$usedProfessions = [];
+            $availableProfessions = self::$professions;
+        }
 
-        // Список цветов для иконок
-        $colors = [
-            'text-red-500',
-            'text-blue-500',
-            'text-green-500',
-            'text-yellow-500',
-            'text-purple-500',
-            'text-pink-500',
-            'text-teal-500',
-            'text-orange-500',
-            'text-indigo-500',
-        ];
+        // Выбираем случайную профессию из доступных
+        $profession = $this->faker->randomElement(array_keys($availableProfessions));
+
+        // Добавляем профессию в список использованных
+        self::$usedProfessions[$profession] = true;
 
         return [
-            'name' => $this->faker->randomElement($professions),
-            'icon' => $this->faker->randomElement($icons),
-            'icon_color' => $this->faker->randomElement($colors),
+            'name' => $profession,
+            'icon' => self::$professions[$profession]['icon'],
+            'icon_color' => self::$professions[$profession]['color'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

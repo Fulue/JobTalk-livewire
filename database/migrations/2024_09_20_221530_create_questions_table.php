@@ -18,6 +18,7 @@ return new class extends Migration
 
             $table->foreignUuid('profession_id')->nullable()->constrained();
             $table->foreignUuid('level_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
 
             $table->timestamps();
             $table->softDeletes();

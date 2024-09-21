@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('question_tag', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('name');
+
+            $table->foreignUuid('profession_id')->nullable()->constrained();
 
             $table->timestamps();
             $table->softDeletes();
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('question_tag');
+        Schema::dropIfExists('levels');
     }
 };

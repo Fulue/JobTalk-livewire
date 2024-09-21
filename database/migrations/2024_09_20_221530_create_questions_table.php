@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('question', 1024);
 
             $table->foreignUuid('profession_id')->nullable()->constrained();
+            $table->foreignUuid('level_id')->nullable()->constrained();
 
             $table->timestamps();
             $table->softDeletes();

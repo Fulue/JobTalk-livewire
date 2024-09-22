@@ -17,6 +17,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $question
  * @property Timestamp[]|HasMany $timestamps
  * @property Tag[]|BelongsToMany $tags
+ * @property Profession $profession
+ * @property Level $level
  */
 class Question extends Model
 {
@@ -24,7 +26,7 @@ class Question extends Model
     use HasUuids;
     //use SoftDeletes;
 
-    protected $fillable = ['question'];
+    protected $fillable = ['question', 'profession_id', 'level_id',];
 
     /**
      * Связь вопроса с тайм-кодами (один ко многим)

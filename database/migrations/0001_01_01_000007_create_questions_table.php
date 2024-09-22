@@ -16,6 +16,9 @@ return new class extends Migration
 
             $table->text('question'); // Вопрос
 
+            $table->foreignUuid('profession_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignUuid('level_id')->nullable()->constrained()->onDelete('set null');
+
             $table->timestamps();
         });
     }

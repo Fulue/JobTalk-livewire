@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Timestamp
  *
  * @property string $id
+ * @property string $question_text
  * @property string $start_time
  * @property string $end_time
  * @property string $video_id
@@ -25,7 +26,7 @@ class Timestamp extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id'];
+    protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id','question_text'];
 
     /**
      * Связь тайм-кода с видео (многие к одному)

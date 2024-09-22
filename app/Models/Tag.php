@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $id
  * @property string $tag
  * @property string $icon
+ * @property string $color
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -27,7 +28,7 @@ class Tag extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['tag','icon'];
+    protected $fillable = ['tag','icon', 'color'];
 
     /**
      * Связь тега с вопросами (многие ко многим)

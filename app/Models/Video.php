@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $status
  * @property string $profession_id
  * @property string $level_id
+ * @property int $user_id
  * @property Profession $profession
  * @property Level $level
  * @property Timestamp[]|HasMany $timestamps
@@ -27,7 +28,7 @@ class Video extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'status', 'profession_id', 'level_id'];
+    protected $fillable = ['name', 'status', 'profession_id', 'level_id', 'user_id'];
 
     /**
      * Связь видео с профессией (многие к одному)

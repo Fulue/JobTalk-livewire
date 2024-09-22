@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -16,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $icon
  * @property string $profession_id
  * @property-read Video[]|HasMany $videos
- * @property-read Question[]|HasMany $questions
+ * @property Profession $profession
  */
 class Level extends Model
 {
@@ -37,12 +38,12 @@ class Level extends Model
     }
 
     /**
-     * Связь уровня с вопросами (один ко многим)
+     * Связь уровня с профессией (многие к одному)
      *
-     * @return HasMany
+     * @return BelongsTo
      */
-    public function questions(): HasMany
+    public function profession(): BelongsTo
     {
-        return $this->hasMany(Question::class);
+        return $this->belongsTo(Profession::class);
     }
 }

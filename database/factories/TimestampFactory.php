@@ -15,6 +15,7 @@ class TimestampFactory extends Factory
     public function definition(): array
     {
         return [
+            'question_text' => $this->faker->word,
             'start_time' => $this->faker->time,
             'end_time' => $this->faker->time,
             'created_at' => Carbon::now(),

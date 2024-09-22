@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('professions', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('name');
+            $table->text('question'); // Вопрос
+
+            $table->foreignUuid('profession_id')->nullable()->constrained()->onDelete('set null');
+            $table->foreignUuid('level_id')->nullable()->constrained()->onDelete('set null');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('professions');
+        Schema::dropIfExists('questions');
     }
 };

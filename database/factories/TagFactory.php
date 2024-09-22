@@ -36,7 +36,9 @@ class TagFactory extends Factory
         ];
 
         return [
-            'name' => $this->faker->randomElement($tags), // Случайный тег из списка
+            'tag' => $this->faker->randomElement($tags), // Случайный тег из списка
+            'color' => $this->faker->word,
+            'icon' => $this->faker->word,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

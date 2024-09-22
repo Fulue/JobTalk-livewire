@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,27 +12,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Timestamp
  *
  * @property string $id
+ * @property string $question_text
  * @property string $start_time
  * @property string $end_time
  * @property string $video_id
  * @property string $question_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- *
- * @property-read Video $video
- * @property-read Question $question
+ * @property Video $video
+ * @property Question $question
  */
 class Timestamp extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
-    protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id'];
+    protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id','question_text'];
 
     /**
-     * Связь таймкода с видео (многие к одному)
+     * Связь тайм-кода с видео (многие к одному)
      *
      * @return BelongsTo
      */
@@ -44,7 +39,7 @@ class Timestamp extends Model
     }
 
     /**
-     * Связь таймкода с вопросом (многие к одному)
+     * Связь тайм-кода с вопросом (многие к одному)
      *
      * @return BelongsTo
      */

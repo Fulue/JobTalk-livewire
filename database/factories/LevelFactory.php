@@ -22,7 +22,8 @@ class LevelFactory extends Factory
         ];
 
         return [
-            'name' => $this->faker->randomElement($levels), // Случайный уровень из списка
+            'level' => $this->faker->randomElement($levels), // Случайный уровень из списка
+            'icon' => $this->faker->word,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

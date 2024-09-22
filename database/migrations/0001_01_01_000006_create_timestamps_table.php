@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('timestamps', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->text('question_text'); // Текст вопроса
 
-            $table->foreignUuid('video_id')->constrained();
-            $table->foreignUuid('question_id')->constrained();
+            $table->time('start_time'); // Время начала
+            $table->time('end_time'); // Время конца
+
+            $table->foreignUuid('video_id')->constrained()->onDelete('cascade');
+            $table->foreignUuid('question_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

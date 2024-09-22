@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Tag
  *
  * @property string $id
- * @property string $name
+ * @property string $tag
+ * @property string $icon
+ * @property string $color
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -25,9 +26,9 @@ class Tag extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['tag','icon', 'color'];
 
     /**
      * Связь тега с вопросами (многие ко многим)

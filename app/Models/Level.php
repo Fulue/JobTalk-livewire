@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,28 +13,37 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Level
  *
  * @property string $id
- * @property string $name
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * @property Carbon|null $deleted_at
- *
- * @property-read Question[]|HasMany $questions
+ * @property string $level
+ * @property string $icon
+ * @property string $profession_id
+ * @property-read Video[]|HasMany $videos
+ * @property Profession $profession
  */
 class Level extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['level', 'icon', 'profession_id'];
 
     /**
-     * Связь уровня с вопросами (один ко многим)
+     * Связь уровня с видео (один ко многим)
      *
      * @return HasMany
      */
-    public function questions(): HasMany
+    public function videos(): HasMany
     {
-        return $this->hasMany(Question::class);
+        return $this->hasMany(Video::class);
+    }
+
+    /**
+     * Связь уровня с профессией (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function profession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class);
     }
 }

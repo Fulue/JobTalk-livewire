@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('levels', function (Blueprint $table) {
+        Schema::create('answers', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
 
-            $table->foreignUuid('profession_id')->nullable()->constrained();
+            $table->text('answer'); // Текст ответа
+
+            $table->foreignUuid('question_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('levels');
+        Schema::dropIfExists('answers');
     }
 };

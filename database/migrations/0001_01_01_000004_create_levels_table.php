@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('levels', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('name', 255);
-            $table->string('url', 1024);
-            $table->enum('status', ['processed', 'pending'])->default('pending');
+            $table->string('level'); // Уровень
+            $table->string('icon'); // Иконка уровня
 
-            $table->foreignId('user_id')->constrained();
+            $table->foreignUuid('profession_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('levels');
     }
 };

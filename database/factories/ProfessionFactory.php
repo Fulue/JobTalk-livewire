@@ -51,7 +51,7 @@ class ProfessionFactory extends Factory
         self::$usedProfessions[$profession] = true;
 
         return [
-            'name' => $profession,
+            'profession' => $profession,
             'icon' => self::$professions[$profession]['icon'],
             'icon_color' => self::$professions[$profession]['color'],
             'created_at' => Carbon::now(),

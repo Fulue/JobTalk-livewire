@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('name');
 
-            $table->foreignUuid('profession_id')->nullable()->constrained();
+            $table->string('level'); // Уровень
+            $table->string('icon'); // Иконка уровня
+
+            $table->foreignUuid('profession_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

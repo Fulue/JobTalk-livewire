@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('answers', function (Blueprint $table) {
+        Schema::create('questions', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('answer');
-
-            $table->foreignUuid('question_id')->constrained();
+            $table->text('question'); // Вопрос
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('answers');
+        Schema::dropIfExists('questions');
     }
 };

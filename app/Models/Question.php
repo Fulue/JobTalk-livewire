@@ -22,7 +22,7 @@ class Question extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['question'];
 

@@ -24,7 +24,7 @@ class Timestamp extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id','question_text'];
 

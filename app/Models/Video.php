@@ -26,7 +26,7 @@ class Video extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['name', 'status', 'profession_id', 'level_id', 'user_id'];
 

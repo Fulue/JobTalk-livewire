@@ -14,12 +14,11 @@ return new class extends Migration
         Schema::create('professions', function (Blueprint $table) {
             $table->uuid('id')->primary();
 
-            $table->string('name');
-            $table->string('icon')->nullable();
-            $table->string('icon_color')->nullable();
+            $table->string('profession'); // Название профессии
+            $table->string('icon'); // Иконка
+            $table->string('icon_color'); // Цвет иконки
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

@@ -14,7 +14,9 @@ class Home extends Component
 
     public function mount(): void
     {
-        $this->professions = ProfessionDTO::collect(Profession::query()->get())->toArray();
+       $Profession = Profession::query()->find('9d10ad62-71fc-473c-9eda-a68ae7b843f2');
+       //dd($Profession->videos);
+       // $this->professions = ProfessionDTO::collect(Profession::query()->get())->toArray();
     }
 
     #[Title('Home')]

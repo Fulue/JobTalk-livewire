@@ -26,7 +26,7 @@ class Tag extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['tag','icon', 'color'];
 

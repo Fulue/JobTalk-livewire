@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
 
             // Для каждого видео создаём таймкоды и вопросы
             $videos->each(function ($video) {
-                $questions = Question::factory(15)->create(['user_id' => $video->user_id]);
+                $questions = Question::factory(15)->create();
 
                 // Для каждого вопроса создаём таймкоды
                 $questions->each(function ($question) use ($video) {
@@ -52,13 +52,13 @@ class DatabaseSeeder extends Seeder
 
         // Создание профессий
         $profession = Profession::factory(10)->create();
-        $level = Level::factory(3)->create();
+        $level = Level::factory(3)->create(['profession_id' => $profession->random()->id]);
 
         $questions = Question::all();
         foreach ($questions as $question) {
-            $question->level_id = $level->random()->id;
-            $question->profession_id = $profession->random()->id;
-            $question->save();
+            //$question->level_id = $level->random()->id;
+            //$question->profession_id = $profession->random()->id;
+            //$question->save();
         }
 
         // Создание тегов и присвоение тегов к вопросам

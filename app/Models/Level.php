@@ -23,7 +23,7 @@ class Level extends Model
 {
     use HasFactory;
     use HasUuids;
-    use SoftDeletes;
+    //use SoftDeletes;
 
     protected $fillable = ['level', 'icon', 'profession_id'];
 

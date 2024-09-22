@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string $id
  * @property string $profession
+ * @property string $icon
+ * @property string $icon_color
  * @property Video[]|HasMany $videos
  */
 class Profession extends Model
@@ -21,7 +23,7 @@ class Profession extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['profession'];
+    protected $fillable = ['profession','icon','icon_color'];
 
     /**
      * Связь профессии с видео (один ко многим)

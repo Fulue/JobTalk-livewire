@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string $id
  * @property string $level
+ * @property string $icon
  * @property string $profession_id
  * @property-read Video[]|HasMany $videos
  * @property-read Question[]|HasMany $questions
@@ -23,7 +24,7 @@ class Level extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['level', 'profession_id'];
+    protected $fillable = ['level', 'icon', 'profession_id'];
 
     /**
      * Связь уровня с видео (один ко многим)

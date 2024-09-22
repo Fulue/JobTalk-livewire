@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Class Tag
  *
  * @property string $id
- * @property string $name
+ * @property string $tag
+ * @property string $icon
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at
@@ -26,7 +27,7 @@ class Tag extends Model
     use HasUuids;
     use SoftDeletes;
 
-    protected $fillable = ['name'];
+    protected $fillable = ['tag','icon'];
 
     /**
      * Связь тега с вопросами (многие ко многим)

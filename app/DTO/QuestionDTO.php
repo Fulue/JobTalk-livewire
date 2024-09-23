@@ -17,9 +17,10 @@ class QuestionDTO extends Data
     public static function fromModel(Question $question): self
     {
         // Количество таймкодов, связанных с данным вопросом
-        $questionTimestampsCount = $question->timestamps()->count();
+        $questionTimestampsCount = $question->timestamps()->count(); ;
 
-        $totalTimestamps = $question->profession->questions
+        // Количество таймкодов, связанных с данной темой
+        $totalTimestamps = $question->profession->questions()->get()
             ->map(fn($question) => $question->timestamps()->count())
             ->sum();
 

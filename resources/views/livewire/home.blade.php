@@ -44,7 +44,7 @@
                             <div class="flex justify-between items-center gap-x-3">
                                 <div class="grow">
                                     <h3 class="group-hover:text-blue-600 font-semibold text-gray-800 dark:group-hover:text-neutral-400 dark:text-neutral-200">
-                                        {{ $profession['name'] }}
+                                        {{ $profession['profession'] }}
                                     </h3>
                                     <p class="text-sm text-gray-500 dark:text-neutral-500">
                                         Вопросов - {{ $profession['count'] }}

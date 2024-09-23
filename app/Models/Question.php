@@ -47,4 +47,14 @@ class Question extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    /**
+     * Связь вопроса с профессией (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function profession(): BelongsTo
+    {
+        return $this->belongsTo(Profession::class);
+    }
 }

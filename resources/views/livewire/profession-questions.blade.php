@@ -1,7 +1,7 @@
 <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
 
     <div class="max-w-2xl mb-10">
-        <h2 class="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">{{ $profession->name }} - Вопросы</h2>
+        <h2 class="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">{{ $profession->profession }} - Вопросы</h2>
         <p class="mt-1 text-gray-600 dark:text-neutral-400">Список вопросов для вашей профессии</p>
     </div>
 

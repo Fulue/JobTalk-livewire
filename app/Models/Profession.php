@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $icon_color
  * @property Video[]|HasMany $videos
  * @property Level[]|HasMany $levels
+ * @property Question[]|HasMany $questions
  */
 class Profession extends Model
 {
@@ -47,8 +48,13 @@ class Profession extends Model
         return $this->hasMany(Level::class);
     }
 
-    public function timestamps(): HasManyThrough
+    /**
+     * Связь профессии с вопросом (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function questions(): HasMany
     {
-        return $this->hasManyThrough(Timestamp::class, Video::class);
+        return $this->hasMany(Question::class);
     }
 }

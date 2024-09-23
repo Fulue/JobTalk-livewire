@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
 
             $videos = Video::factory(rand(2,4))->create([
                 'user_id' => $users->random()->id,
-                'level_id' => $randomLevel->id,  // Случайный уровень из профессии
+                'level_id' => $randomLevel->id,
                 'profession_id' => $profession->id,
             ]);
 

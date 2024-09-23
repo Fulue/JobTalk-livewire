@@ -30,26 +30,56 @@ class QuestionFactory extends Factory
             'Фреймворки',
         ];
 
-        // Шаблоны вопросов
-        $templates = [
-            'Что такое {topic} и как оно работает?',
-            'Какие основные принципы {topic}?',
-            'Как использовать {topic} в реальных проектах?',
-            'Расскажите о преимуществах {topic}.',
-            'Каковы типичные ошибки при работе с {topic}?',
-            'В чем отличие {topic} от других технологий?',
-            'Как улучшить производительность с помощью {topic}?',
-            'Объясните, почему {topic} важен(а) для разработки.',
-            'Как тестировать {topic}?',
-            'Какие инструменты можно использовать для {topic}?',
+        // Список технологий
+        $technologies = [
+            'Laravel',
+            'Vue.js',
+            'Docker',
+            'Kubernetes',
+            'React',
+            'MySQL',
+            'Redis',
+            'Node.js',
+            'GraphQL',
+            'ElasticSearch',
+            'AWS',
         ];
 
-        // Выбор случайной темы и шаблона
+        // Роли в разработке
+        $roles = [
+            'разработчик',
+            'инженер по безопасности',
+            'тестировщик',
+            'архитектор системы',
+            'девопс инженер',
+        ];
+
+        // Шаблоны вопросов
+        $templates = [
+            'Что такое {topic} и как оно используется в {technology}?',
+            'Какие основные принципы {topic} применимы в {role}?',
+            'Как использовать {topic} и {technology} в реальных проектах?',
+            'Расскажите о преимуществах {topic} и его применении в {technology}.',
+            'Каковы типичные ошибки при работе с {topic} и как их избегать?',
+            'В чем отличие {topic} от других подходов в {role}?',
+            'Как улучшить производительность с помощью {topic} в {technology}?',
+            'Объясните, почему {topic} важен(а) для {role}.',
+            'Как тестировать {topic} с помощью {technology}?',
+            'Какие инструменты и практики лучше использовать для {topic} в {role}?',
+        ];
+
+        // Выбор случайных элементов
         $topic = $this->faker->randomElement($topics);
+        $technology = $this->faker->randomElement($technologies);
+        $role = $this->faker->randomElement($roles);
         $template = $this->faker->randomElement($templates);
 
         // Генерация вопроса
-        $question = str_replace('{topic}', $topic, $template);
+        $question = str_replace(
+            ['{topic}', '{technology}', '{role}'],
+            [$topic, $technology, $role],
+            $template
+        );
 
         return [
             'question' => $question, // Генерируемый вопрос
@@ -57,5 +87,6 @@ class QuestionFactory extends Factory
             'updated_at' => Carbon::now(),
         ];
     }
+
 
 }

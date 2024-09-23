@@ -9,7 +9,7 @@ class ProfessionDTO extends Data
 {
     public function __construct(
         public string $id,
-        public string $name,
+        public string $profession,
         public int $count,
         public string $icon,
         public string $icon_color,
@@ -19,7 +19,7 @@ class ProfessionDTO extends Data
     {
         return new self(
             id: $profession->id,
-            name: $profession->name,
+            profession: $profession->profession,
             count: $profession->questions->count(),
             icon: $profession->icon,
             icon_color: $profession->icon_color,

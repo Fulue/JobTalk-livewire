@@ -36,11 +36,16 @@ class TagFactory extends Factory
         ];
 
         $colors = [
-            'bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white',
-            'bg-gray-50 text-gray-500 dark:bg-white/10 dark:text-white',
             'bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500',
             'bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500',
             'bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500',
+            'bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500',
+            'bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500',
+            'bg-orange-100 text-orange-800 dark:bg-orange-800/30 dark:text-orange-500',
+            'bg-lime-100 text-lime-800 dark:bg-lime-800/30 dark:text-lime-500',
+            'bg-purple-100 text-purple-800 dark:bg-purple-800/30 dark:text-purple-500',
+            'bg-pink-100 text-pink-800 dark:bg-pink-800/30 dark:text-pink-500',
+            'bg-indigo-100 text-indigo-800 dark:bg-indigo-800/30 dark:text-indigo-500',
         ];
 
         $icons = [
@@ -59,7 +64,6 @@ class TagFactory extends Factory
             'mdi-chart-line',
             'mdi-book-open',
             'mdi-function',
-            'mdi-pattern',
             'mdi-rocket',
             'mdi-speedometer',
         ];

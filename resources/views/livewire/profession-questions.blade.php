@@ -1,4 +1,4 @@
-<div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+<div class="px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
 
     <x-profession-questions.title-with-icon
         :icon="$profession['icon']"
@@ -16,6 +16,7 @@
             <div class="grid md:grid-cols-2 gap-3 sm:gap-6">
                 @foreach($this->questions as $question)
                     <x-profession-questions.question-item
+                        :questionId="$question['id']"
                         :question="$question['question']"
                         :percentage="$question['percentage']"
                         :tags="$question['tags']"

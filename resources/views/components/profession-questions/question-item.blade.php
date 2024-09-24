@@ -1,4 +1,8 @@
-<a class="group grid bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800" href="#">
+<a
+    wire:key="{{ $questionId }}"
+    class="group grid bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
+    href="{{ route('answers', $questionId) }}"
+>
     <div class="p-4 md:p-5 grid gap-4 ">
         <div class="flex justify-end">
             <p class="flex items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">

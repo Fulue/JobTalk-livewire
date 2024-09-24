@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->text('answer'); // Текст ответа
+            $table->string('source')->nullable(); // Источник ответа
 
             $table->foreignUuid('question_id')->constrained()->onDelete('cascade');
 

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property string $id
  * @property string $answer
+ * @property string $source
  * @property string $question_id
  * @property Question $question
  */
@@ -22,7 +23,7 @@ class Answer extends Model
     use HasUuids;
     //use SoftDeletes;
 
-    protected $fillable = ['answer', 'question_id'];
+    protected $fillable = ['answer', 'question_id', 'source'];
 
     /**
      * Связь ответа с вопросом (многие к одному)

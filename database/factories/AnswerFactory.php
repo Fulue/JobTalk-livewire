@@ -71,7 +71,7 @@ class AnswerFactory extends Factory
         // Возвращаем финальный ответ
         return [
             'answer' => trim($answerText), // Генерация ответа из 5-15 предложений
-            'source' => $this->faker->url,
+            'source' => $this->faker->optional(0.7)->url,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

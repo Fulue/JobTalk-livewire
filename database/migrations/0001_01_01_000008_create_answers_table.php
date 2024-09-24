@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreignUuid('question_id')->constrained()->onDelete('cascade');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

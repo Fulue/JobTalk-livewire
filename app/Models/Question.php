@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class Question
@@ -16,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $id
  * @property string $question
  * @property Timestamp[]|HasMany $timestamps
+ * @property Timestamp[]|HasMany $answers
  * @property Tag[]|BelongsToMany $tags
  * @property Profession $profession
  * @property Level $level
@@ -27,6 +27,16 @@ class Question extends Model
     //use SoftDeletes;
 
     protected $fillable = ['question', 'profession_id', 'level_id',];
+
+    /**
+     * Связь вопроса с ответами (один ко многим)
+     *
+     * @return HasMany
+     */
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class);
+    }
 
     /**
      * Связь вопроса с тайм-кодами (один ко многим)

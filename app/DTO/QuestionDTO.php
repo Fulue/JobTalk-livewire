@@ -37,7 +37,7 @@ class QuestionDTO extends Data
             question: $question->question,
             level: $question->level->level,
             level_icon: $question->level->icon,
-            tags: $question->tags()->get()->toArray(),
+            tags: TagDTO::collect($question->tags()->get())->toArray(),
             percentage: round($percentage, 2),
         );
     }

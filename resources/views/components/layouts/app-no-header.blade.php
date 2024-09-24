@@ -36,6 +36,10 @@
 
 <body class="dark:bg-neutral-900">
 
+    <script>
+        HSDropdown.autoInit();
+    </script>
+
     <main class="content max-w-6xl mx-auto">
         {{ $slot }}
     </main>

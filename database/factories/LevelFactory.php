@@ -12,6 +12,7 @@ class LevelFactory extends Factory
 
     public function definition(): array
     {
+        // Список уровней
         $levels = [
             'Джуниор',
             'Мидл',
@@ -21,11 +22,26 @@ class LevelFactory extends Factory
             'Архитектор',
         ];
 
+        // Список иконок из MDI (выбираем соответствующие иконки для уровней)
+        $icons = [
+            'mdi-account-badge',          // Джуниор
+            'mdi-account-circle',          // Мидл
+            'mdi-account-tie',             // Сеньор
+            'mdi-account-supervisor',      // Лид
+            'mdi-account-multiple',        // Тимлид
+            'mdi-domain',                  // Архитектор
+        ];
+
+        // Выбираем случайный уровень и соответствующую иконку
+        $level = $this->faker->randomElement($levels);
+        $icon = $icons[array_search($level, $levels)];
+
         return [
-            'level' => $this->faker->randomElement($levels), // Случайный уровень из списка
-            'icon' => $this->faker->word,
+            'level' => $level, // Случайный уровень из списка
+            'icon' => $icon,   // Соответствующая иконка из blade-mdi
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
     }
+
 }

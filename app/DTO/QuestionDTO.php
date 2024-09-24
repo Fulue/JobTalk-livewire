@@ -11,15 +11,18 @@ class QuestionDTO extends Data
     public function __construct(
         public string $id,
         public string $question,
-        public float $percentage,  // Процент попадания в таймкоды
+        public string $level,
+        public string $level_icon,
+        public array $tags,
+        public float $percentage,
     ) {}
 
     public static function fromModel(Question $question): self
     {
-        // Количество таймкодов, связанных с данным вопросом
+        // Количество тайм-кодов, связанных с данным вопросом
         $questionTimestampsCount = $question->timestamps()->count(); ;
 
-        // Количество таймкодов, связанных с данной темой
+        // Количество тайм-кодов, связанных с данной темой
         $totalTimestamps = $question->profession->questions()->get()
             ->map(fn($question) => $question->timestamps()->count())
             ->sum();
@@ -32,7 +35,10 @@ class QuestionDTO extends Data
         return new self(
             id: $question->id,
             question: $question->question,
-            percentage: round($percentage, 2), // Округляем до двух знаков
+            level: $question->level->level,
+            level_icon: $question->level->icon,
+            tags: TagDTO::collect($question->tags()->get())->toArray(),
+            percentage: round($percentage, 2),
         );
     }
 }

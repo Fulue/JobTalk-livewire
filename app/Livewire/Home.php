@@ -9,11 +9,13 @@ use App\Models\Timestamp;
 use App\Models\Video;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class Home extends Component
 {
+    #[Locked]
     public array $professions = [];
 
     public function mount(): void

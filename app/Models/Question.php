@@ -57,4 +57,14 @@ class Question extends Model
     {
         return $this->belongsTo(Profession::class);
     }
+
+    /**
+     * Связь вопроса с уровнем (многие к одному)
+     *
+     * @return BelongsTo
+     */
+    public function level(): BelongsTo
+    {
+        return $this->belongsTo(Level::class);
+    }
 }

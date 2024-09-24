@@ -35,6 +35,9 @@
 </head>
 
 <body class="dark:bg-neutral-900">
+    <script>
+        HSDropdown.autoInit();
+    </script>
 
     <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-gray-900 border-b text-sm py-2.5  dark:bg-neutral-950 dark:border-neutral-700">
         <nav class="max-w-[85rem] mx-auto w-full flex md:grid md:grid-cols-3 md:gap-x-1 basis-full items-center px-4 sm:px-6 lg:px-8">

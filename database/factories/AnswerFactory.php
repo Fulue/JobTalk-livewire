@@ -13,7 +13,7 @@ class AnswerFactory extends Factory
 
     public function definition(): array
     {
-        // Шаблоны ответов
+        // Шаблоны предложений для ответов
         $templates = [
             'Основные принципы {topic} включают {answer}.',
             'Ключевая особенность {topic} заключается в {answer}.',
@@ -25,9 +25,14 @@ class AnswerFactory extends Factory
             '{answer} является основным преимуществом {topic}.',
             'Для тестирования {topic} рекомендуется использовать {answer}.',
             'Наиболее популярные инструменты для {topic} - это {answer}.',
+            'Эффективное внедрение {topic} требует {answer}.',
+            'Преимущество {topic} заключается в {answer}.',
+            'Решение проблемы {topic} включает {answer}.',
+            '{topic} упрощает процессы за счёт {answer}.',
+            'Важно помнить, что {topic} работает лучше всего с {answer}.',
         ];
 
-        // Ответы на вопросы
+        // Варианты ответов
         $answers = [
             'инкапсуляция, наследование и полиморфизм',
             'оптимизация производительности',
@@ -39,21 +44,33 @@ class AnswerFactory extends Factory
             'повышение гибкости и адаптивности к изменениям',
             'unit-тесты и интеграционные тесты',
             'Postman, PHPUnit, Jenkins, Docker',
+            'обнаружение и исправление багов',
+            'улучшение пользовательского интерфейса',
+            'сокращение времени на разработку',
+            'лучшая организация кода',
+            'снижение рисков и уязвимостей',
         ];
 
-        // Получаем связанный вопрос
+        // Получаем связанный вопрос (если требуется)
         $question = Question::factory();
 
-        // Замена {topic} на тему вопроса
-        $topic = $this->faker->word; // Или используй реальные темы, если они есть в вопросе
-        $template = $this->faker->randomElement($templates);
-        $answer = $this->faker->randomElement($answers);
+        // Генерация ответов
+        $topic = $this->faker->word; // Можно заменить на реальные темы, если они есть
+        $numSentences = rand(5, 15); // Случайное количество предложений (от 5 до 15)
 
-        // Генерация финального ответа
-        $finalAnswer = str_replace(['{topic}', '{answer}'], [$topic, $answer], $template);
+        $answerText = '';
+        for ($i = 0; $i < $numSentences; $i++) {
+            // Выбираем случайные шаблон и ответ
+            $template = $this->faker->randomElement($templates);
+            $answer = $this->faker->randomElement($answers);
+            // Формируем предложение и добавляем его к тексту ответа
+            $sentence = str_replace(['{topic}', '{answer}'], [$topic, $answer], $template);
+            $answerText .= $sentence . ' ';
+        }
 
+        // Возвращаем финальный ответ
         return [
-            'answer' => $finalAnswer, // Генерация ответа
+            'answer' => trim($answerText), // Генерация ответа из 5-15 предложений
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

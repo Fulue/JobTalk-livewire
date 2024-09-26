@@ -1,15 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
+    darkMode: 'class',
+    content: [
       "./resources/**/*.blade.php",
       "./database/factories/ProfessionFactory.php",
       "./database/factories/TagFactory.php",
-  ],
-  theme: {
+    ],
+    theme: {
     extend: {},
-  },
-  plugins: [
+    },
+    plugins: [
       require('preline/plugin'),
-  ],
+    ],
 }
 

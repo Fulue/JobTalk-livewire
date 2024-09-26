@@ -37,6 +37,7 @@
 <body class="dark:bg-neutral-900">
     <script>
         HSDropdown.autoInit();
+        HSThemeSwitch.autoInit();
     </script>
 
     <header class="sticky top-0 inset-x-0 flex flex-wrap md:justify-start md:flex-nowrap z-[48] w-full bg-gray-900 border-b text-sm py-2.5  dark:bg-neutral-950 dark:border-neutral-700">
@@ -44,12 +45,29 @@
             <div class="me-5">
                 <a
                     wire:navigate
-                    class="flex-none rounded-md text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+                    class="flex items-center gap-2 rounded-md text-xl font-semibold focus:outline-none focus:opacity-80"
                     href="/"
-                    aria-label="Preline">
+                    aria-label="JobTalk">
                     <x-mdi-bicycle class="size-6 text-white" />
+                    <span class="text-white text-sm">
+                        JobTalk
+                    </span>
                 </a>
             </div>
+            <div>
+
+            </div>
+
+            <div class="flex-1 flex flex-row justify-end items-center gap-1">
+
+                <button type="button" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-white hover:bg-white/10 focus:outline-none focus:bg-white/10 disabled:opacity-50 disabled:pointer-events-none hs-dark-mode hs-dark-mode-active:hidden block" data-hs-theme-click-value="dark">
+                    <x-mdi-lightbulb-outline class="size-4"/>
+                </button>
+                <button type="button" class="size-[38px] relative inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-full border border-transparent text-white hover:bg-white/10 focus:outline-none focus:bg-white/10 disabled:opacity-50 disabled:pointer-events-none hs-dark-mode hs-dark-mode-active:inline-flex hidden" data-hs-theme-click-value="light">
+                    <x-mdi-lightbulb-on-outline class="size-4"/>
+                </button>
+            </div>
+
         </nav>
     </header>
 

@@ -7,7 +7,12 @@
         description="Список вопросов для вашей профессии"
     />
 
-    <x-profession-questions.dropdown-filter :levels="$profession['levels']" :profession-id="$profession['id']" />
+    <x-profession-questions.dropdown-filter
+        :tags="$profession['tags']"
+        :levels="$profession['levels']"
+        :profession-id="$profession['id']"
+        :filtered="$filtered"
+    />
 
     @if(count($this->questions) == 0)
         <x-profession-questions.empty-list />

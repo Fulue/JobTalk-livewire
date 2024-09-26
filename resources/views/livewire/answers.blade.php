@@ -21,6 +21,9 @@
                             <span class="text-sm">
                                 {{ $answer['created_at'] }}
                             </span>
+                            @if($answer['source'])
+                                <a href="{{ $answer['source'] }}" target="_blank" class="text-sm underline">Источник</a>
+                            @endif
                         </div>
                     </div>
                 @endforeach

@@ -2,6 +2,7 @@
     wire:key="{{ $questionId }}"
     class="group grid bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800"
     href="{{ route('answers', $questionId) }}"
+    wire:navigate
 >
     <div class="p-4 md:p-5 grid gap-4 ">
         <div class="flex justify-end">

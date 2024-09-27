@@ -16,8 +16,8 @@ return new class extends Migration
 
             $table->text('question_text'); // Текст вопроса
 
-            $table->time('start_time'); // Время начала
-            $table->time('end_time'); // Время конца
+            $table->time('start_time')->nullable(); // Время начала
+            $table->time('end_time')->nullable(); // Время конца
 
             $table->foreignUuid('video_id')->constrained()->onDelete('cascade');
             $table->foreignUuid('question_id')->constrained()->onDelete('cascade');

@@ -1,8 +1,18 @@
-<div class="flex justify-end">
-    <div class="flex gap-3 items-center">
+<div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+    <div class="relative w-full">
+        <input
+            type="text"
+            class="py-3 pe-0 ps-8 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
+            placeholder="Поиск по вопросам"
+        >
+        <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-3 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+            <x-mdi-magnify class="shrink-0 size-4 text-gray-500 dark:text-neutral-500"/>
+        </div>
+    </div>
+    <div class="flex justify-end gap-3 items-center">
         @if($filtered)
             <button
-                x-on:click.prevent="$wire.setLevel(null)"
+                x-on:click.prevent="$wire.filterClear()"
                 class="flex items-center gap-1 text-gray-600 hover:text-gray-500 dark:text-neutral-400 hover:dark:text-neutral-500"
             >
                 <x-mdi-restore class="size-4"/>

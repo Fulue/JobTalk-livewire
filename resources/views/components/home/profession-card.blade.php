@@ -1,6 +1,6 @@
 <div wire:key="{{ $professionId }}">
     <a wire:navigate href="{{ route('profession.questions', $professionId) }}"
-       class="group p-4 md:p-5 gap-3 items-center flex flex-col md:flex-row justify-between bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800">
+       class="group p-4 md:p-5 gap-3 items-center flex justify-between bg-white border shadow-sm rounded-xl hover:shadow-md focus:outline-none focus:shadow-md transition dark:bg-neutral-900 dark:border-neutral-800">
         <div class="flex items-center gap-3">
             <x-dynamic-component :component="$icon" :class="$iconColor . ' size-8'" />
             <div class="flex justify-between items-center gap-x-3">

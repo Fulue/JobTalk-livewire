@@ -11,8 +11,8 @@ class QuestionDTO extends Data
     public function __construct(
         public string $id,
         public string $question,
-        public string $level,
-        public string $level_icon,
+        public string|null $level,
+        public string|null $level_icon,
         public array $tags,
         public float $percentage,
     ) {}
@@ -35,8 +35,8 @@ class QuestionDTO extends Data
         return new self(
             id: $question->id,
             question: $question->question,
-            level: $question->level->level,
-            level_icon: $question->level->icon,
+            level: $question->level->level??null,
+            level_icon: $question->level->icon??null,
             tags: TagDTO::collect($question->tags()->get())->toArray(),
             percentage: round($percentage, 2),
         );

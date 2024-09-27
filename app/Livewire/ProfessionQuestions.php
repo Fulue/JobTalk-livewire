@@ -21,31 +21,32 @@ class ProfessionQuestions extends Component
 
     public function setLevel(string|null $levelId): void
     {
-        if($levelId === null) {
-            $this->filtered = false;
-        }
+        $this->filtered = $levelId !== null;
 
-        $profession = Profession::query()->findOrFail($this->profession['id']);
-
-        $this->questions = QuestionDTO::collect(
-            $profession->questions()
-                ->when($levelId, fn($query) => $query->where('level_id', $levelId))
-                ->get()
-        )->sortByDesc('percentage')->toArray();
+        $this->questions = $this->getQuestions($levelId);
     }
 
     public function setTag(string|null $tagId): void
     {
-        if ($tagId === null) {
-            $this->filtered = false;
-        }
+        $this->filtered = $tagId !== null;
+        $this->questions = $this->getQuestions(null, $tagId);
+    }
 
+    public function filterClear(): void
+    {
+        $this->filtered = false;
+        $this->questions = $this->getQuestions();
+    }
+
+    private function getQuestions(?string $levelId = null, ?string $tagId = null): array
+    {
         $profession = Profession::query()->findOrFail($this->profession['id']);
 
-        $this->questions = QuestionDTO::collect(
+        return QuestionDTO::collect(
             $profession->questions()
-                ->when($tagId, function($query) use ($tagId) {
-                    $query->whereHas('tags', function($tagQuery) use ($tagId) {
+                ->when($levelId, fn($query) => $query->where('level_id', $levelId))
+                ->when($tagId, function ($query) use ($tagId) {
+                    $query->whereHas('tags', function ($tagQuery) use ($tagId) {
                         $tagQuery->where('tag_id', $tagId);
                     });
                 })
@@ -53,19 +54,12 @@ class ProfessionQuestions extends Component
         )->sortByDesc('percentage')->toArray();
     }
 
-
     public function mount(string $professionId): void
     {
-        // Получаем профессию
-        $profession = Profession::query()->findOrFail($professionId);
-
-        // Преобразуем вопросы профессии в коллекцию DTO и конвертируем в массив
-        $this->questions = QuestionDTO::collect(
-            $profession->questions()->get()
-        )->sortByDesc('percentage')->toArray();
-
-        $this->profession = ProfessionQuestionsDTO::from($profession)->toArray();
+        $this->profession = ProfessionQuestionsDTO::from(Profession::query()->findOrFail($professionId))->toArray();
+        $this->questions = $this->getQuestions();
     }
+
     #[Title('Questions')]
     public function render(): mixed
     {

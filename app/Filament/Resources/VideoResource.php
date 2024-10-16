@@ -32,10 +32,17 @@ class VideoResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('url')
                     ->required(),
-                Forms\Components\TextInput::make('status')
-                    ->required(),
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
+                    ->required(),
+                Forms\Components\Select::make('profession_id')
+                    ->relationship('profession', 'profession')
+                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->options([
+                        'processed' => 'Processed',
+                        'pending' => 'Pending',
+                    ])
                     ->required(),
             ]);
     }
@@ -44,18 +51,19 @@ class VideoResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('uuid')
+                Tables\Columns\TextColumn::make('id')
                     ->label('UUID')
-                    ->searchable(),
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('name')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('url')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('status')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('user.name')
-                    ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -64,10 +72,14 @@ class VideoResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
-                    ->dateTime()
+                Tables\Columns\TextColumn::make('status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'processed' => 'warning',
+                        'pending' => 'success',
+                    })
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->searchable(),
             ])
             ->filters([
                 //

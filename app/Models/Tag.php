@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Carbon|null $deleted_at
  *
  * @property-read Question[]|BelongsToMany $questions
+ * @property-read Timestamp[]|BelongsToMany $timestamps
  */
 class Tag extends Model
 {
@@ -31,12 +33,22 @@ class Tag extends Model
     protected $fillable = ['tag','icon', 'color'];
 
     /**
-     * Связь тега с вопросами (многие ко многим)
+     * Связь тега с вопросами (полиморфная связь)
      *
-     * @return BelongsToMany
+     * @return MorphToMany
      */
-    public function questions(): BelongsToMany
+    public function questions(): MorphToMany
     {
-        return $this->belongsToMany(Question::class, 'question_tag');
+        return $this->morphedByMany(Question::class, 'taggable');
+    }
+
+    /**
+     * Связь тега с таймкодами (полиморфная связь)
+     *
+     * @return MorphToMany
+     */
+    public function timestamps(): MorphToMany
+    {
+        return $this->morphedByMany(Timestamp::class, 'taggable');
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -18,13 +20,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $video_id
  * @property string $question_id
  * @property Video $video
- * @property Question $question
+ *
+ * @property Question[]|BelongsToMany $questions
+ * @property Tag[]|MorphToMany $tags
  */
 class Timestamp extends Model
 {
     use HasFactory;
     use HasUuids;
-    //use SoftDeletes;
 
     protected $fillable = ['start_time', 'end_time', 'video_id', 'question_id','question_text'];
 
@@ -39,12 +42,23 @@ class Timestamp extends Model
     }
 
     /**
-     * Связь тайм-кода с вопросом (многие к одному)
+     * Определяет связь вопроса с тегами (многие ко многим) через морфологическую таблицу.
      *
-     * @return BelongsTo
+     *
+     * @return MorphToMany
      */
-    public function question(): BelongsTo
+    public function tags(): MorphToMany
     {
-        return $this->belongsTo(Question::class);
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    /**
+     * Связь тайм-кодов с вопросами (многие ко многим)
+     *
+     * @return BelongsToMany
+     */
+    public function questions(): BelongsToMany
+    {
+        return $this->belongsToMany(Question::class);
     }
 }

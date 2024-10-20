@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\VideoResource\Pages;
 use App\Filament\Resources\VideoResource\RelationManagers;
+use App\Models\Timestamp;
 use App\Models\Video;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -11,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class VideoResource extends Resource
@@ -43,6 +45,7 @@ class VideoResource extends Resource
                         'processed' => 'Processed',
                         'pending' => 'Pending',
                     ])
+                    ->default('processed')
                     ->required(),
             ]);
     }
@@ -50,6 +53,7 @@ class VideoResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at')
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('UUID')
@@ -58,6 +62,8 @@ class VideoResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('timestamps')
+                    ->formatStateUsing(fn (Video $video): string => $video->timestamps()->count() ?? '0'),
                 Tables\Columns\TextColumn::make('url')
                     ->sortable()
                     ->searchable(),
@@ -97,7 +103,7 @@ class VideoResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            TimestampResource\RelationManagers\TimestampsRelationManager::class,
         ];
     }
 

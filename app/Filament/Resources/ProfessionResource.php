@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProfessionResource\Pages;
 use App\Filament\Resources\ProfessionResource\RelationManagers;
 use App\Models\Profession;
+use App\Models\Video;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,7 +24,11 @@ class ProfessionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('profession')
+                    ->required(),
+                Forms\Components\TextInput::make('icon')
+                    ->required(),
+                Forms\Components\TextInput::make('icon_color')
                     ->required(),
             ]);
     }
@@ -33,19 +38,18 @@ class ProfessionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')
-                    ->label('ID')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('profession')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('videos')
+                    ->numeric()
+                    ->formatStateUsing(fn (Profession $profession): string => $profession->videos()->count() ?? '0'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

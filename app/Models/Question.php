@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 /**
  * Class Question
  *
  * @property string $id
  * @property string $question
- * @property Timestamp[]|HasMany $timestamps
- * @property Timestamp[]|HasMany $answers
- * @property Tag[]|BelongsToMany $tags
+ * @property Timestamp[]|BelongsToMany $timestamps
+ * @property Answer[]|HasMany $answers
+ * @property Tag[]|MorphToMany $tags
  * @property Profession $profession
  * @property Level $level
  */
@@ -24,9 +25,8 @@ class Question extends Model
 {
     use HasFactory;
     use HasUuids;
-    //use SoftDeletes;
 
-    protected $fillable = ['question', 'profession_id', 'level_id',];
+    protected $fillable = ['question', 'profession_id', 'level_id'];
 
     /**
      * Связь вопроса с ответами (один ко многим)
@@ -39,23 +39,24 @@ class Question extends Model
     }
 
     /**
-     * Связь вопроса с тайм-кодами (один ко многим)
-     *
-     * @return HasMany
-     */
-    public function timestamps(): HasMany
-    {
-        return $this->hasMany(Timestamp::class);
-    }
-
-    /**
-     * Связь вопроса с тегами (многие ко многим)
+     * Определяет связь вопроса с тайм-кодами (многие ко многим)
      *
      * @return BelongsToMany
      */
-    public function tags(): BelongsToMany
+    public function timestamps(): BelongsToMany
     {
-        return $this->belongsToMany(Tag::class);
+        return $this->belongsToMany(Timestamp::class);
+    }
+
+    /**
+     * Определяет связь вопроса с тегами (многие ко многим) через морфологическую таблицу.
+     *
+     *
+     * @return MorphToMany
+     */
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     /**

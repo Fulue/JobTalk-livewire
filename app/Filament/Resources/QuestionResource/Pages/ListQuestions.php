@@ -62,10 +62,14 @@ class ListQuestions extends ListRecords
 
                                 // Если таймкод существует, обновляем его поля
                                 if ($timestamp) {
-                                    $uniqueQuestion->timestamps()->attach($timestamp->id);
+                                    $uniqueQuestion->timestamps()->attach($timestamp->id, [
+                                        'similarity' => $similarQuestion['similarity'],
+                                    ]);
                                 }
                             }
                         }
+
+                        Question::recalculatePercentages();
                     });
                 })
                 ->color('info')

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Observers\TimestampObserver;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -24,6 +26,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property Question[]|BelongsToMany $questions
  * @property Tag[]|MorphToMany $tags
  */
+#[ObservedBy([TimestampObserver::class])]
 class Timestamp extends Model
 {
     use HasFactory;

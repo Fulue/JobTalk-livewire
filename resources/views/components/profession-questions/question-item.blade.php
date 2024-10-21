@@ -7,8 +7,10 @@
     <div class="p-4 md:p-5 grid gap-4 ">
         <div class="flex justify-end">
             <p class="flex items-center gap-1 text-sm text-gray-500 dark:text-neutral-500">
-                <x-dynamic-component :component="$levelIcon" class="size-3" />
-                {{ $level }}
+                @if($levelIcon)
+                    <x-dynamic-component :component="$levelIcon" class="size-3" />
+                @endif
+                {{ $level??'Общий' }}
             </p>
         </div>
         <div>

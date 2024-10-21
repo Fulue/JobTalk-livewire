@@ -46,6 +46,7 @@ class VideoResource extends Resource
                         'pending' => 'Pending',
                     ])
                     ->default('processed')
+                    ->native(false)
                     ->required(),
             ]);
     }

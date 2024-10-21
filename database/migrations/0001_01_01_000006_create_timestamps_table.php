@@ -18,7 +18,6 @@ return new class extends Migration
 
             $table->time('start_time')->nullable(); // Время начала
             $table->time('end_time')->nullable(); // Время конца
-            $table->float('similarity', 2)->nullable(); // Расстояние между вопросами
 
             $table->foreignUuid('video_id')->constrained()->onDelete('cascade');
 

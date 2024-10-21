@@ -15,6 +15,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
 
             $table->text('question'); // Вопрос
+            $table->decimal('percentage', 5, 2)->default(0); // Процент попадания вопроса
 
             $table->foreignUuid('profession_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignUuid('level_id')->nullable()->constrained()->onDelete('set null');

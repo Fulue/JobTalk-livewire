@@ -16,6 +16,8 @@ return new class extends Migration
 
             $table->foreignUuid('timestamp_id')->nullable()->constrained()->onDelete('cascade'); // Внешний ключ на timestamps
             $table->foreignUuid('question_id')->nullable()->constrained()->onDelete('cascade'); // Внешний ключ на questions
+            $table->float('similarity', 2)->nullable();
+
         });
     }
 

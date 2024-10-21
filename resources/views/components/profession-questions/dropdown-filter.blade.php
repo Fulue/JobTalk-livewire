@@ -40,6 +40,9 @@
                 >
                     <div class="hs-dropdown-open:ease-in hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 transition ease-out opacity-0 scale-95 duration-200 mt-2 origin-top-left min-w-60 bg-white shadow-md rounded-lg dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700" data-hs-transition>
                         <div class="p-1 space-y-0.5">
+                            @if(count($tags) == 0)
+                                <p class="py-2 px-3 text-sm text-gray-600 dark:text-neutral-400">Темы не найдены</p>
+                            @endif
                             @foreach($tags as $tag)
                                 <a
                                         x-on:click.prevent="$wire.setTag('{{ $tag['id'] }}'); $wire.filtered = true;"
@@ -74,6 +77,9 @@
                 >
                     <div class="hs-dropdown-open:ease-in hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 transition ease-out opacity-0 scale-95 duration-200 mt-2 origin-top-left min-w-44 bg-white shadow-md rounded-lg dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700" data-hs-transition>
                         <div class="p-1 space-y-0.5">
+                            @if(count($levels) == 0)
+                                <p class="py-2 px-3 text-sm text-gray-600 dark:text-neutral-400">Уровни не найдены</p>
+                            @endif
                             @foreach($levels as $level)
                                 <a
                                     x-on:click.prevent="$wire.setLevel('{{ $level['id'] }}'); $wire.filtered = true;"

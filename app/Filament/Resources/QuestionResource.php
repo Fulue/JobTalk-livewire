@@ -45,6 +45,10 @@ class QuestionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('question')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('percentage')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

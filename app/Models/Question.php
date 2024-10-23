@@ -84,21 +84,45 @@ class Question extends Model
     }
 
     /**
-     * Пересчитывает процент каждого вопроса на основе общего количества таймштампов.
+     * Пересчитывает процент каждого вопроса на основе общего количества тайм-кодов.
      *
      * @return void
      */
-    public static function recalculatePercentages(): void
+    public static function recalculatePercentages()
     {
-        $totalTimestamps = Timestamp::count();
-
+        // Получаем все вопросы с количеством связанных таймкодов
         $questions = Question::withCount('timestamps')->get();
 
+        // Находим максимальное и минимальное количество таймкодов
+        $maxTimestampsCount = $questions->max('timestamps_count');
+        $minTimestampsCount = $questions->min('timestamps_count');
+
+        // Определяем диапазон процентов
+        $minPercentage = 30;
+        $maxPercentage = 95;
+
+        // Если нет таймкодов, устанавливаем процент 0 для всех вопросов
+        if ($maxTimestampsCount == 0) {
+            foreach ($questions as $question) {
+                $question->update(['percentage' => 0]);
+            }
+            return;
+        }
+
+        // Рассчитываем проценты для каждого вопроса
         foreach ($questions as $question) {
-            $percentage = $totalTimestamps > 0
-                ? ($question->timestamps_count / $totalTimestamps) * 100
-                : 0;
+            if ($maxTimestampsCount == $minTimestampsCount) {
+                // Если все вопросы имеют одинаковое количество таймкодов
+                $percentage = $maxPercentage;
+            } else {
+                // Пропорциональный расчет процентов между 70 и 90%
+                $percentage = $minPercentage + (($question->timestamps_count - $minTimestampsCount) / ($maxTimestampsCount - $minTimestampsCount)) * ($maxPercentage - $minPercentage);
+            }
+
+            // Обновляем процент для каждого вопроса
             $question->update(['percentage' => $percentage]);
         }
     }
+
+
 }

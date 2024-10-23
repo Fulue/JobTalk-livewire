@@ -28,7 +28,11 @@ class TagResource extends Resource
                     ->disabled()
                     ->label('UUID')
                     ->required(),
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('tag')
+                    ->required(),
+                Forms\Components\TextInput::make('color')
+                    ->required(),
+                Forms\Components\TextInput::make('icon')
                     ->required(),
             ]);
     }
@@ -37,20 +41,17 @@ class TagResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('uuid')
+                Tables\Columns\TextColumn::make('id')
                     ->label('UUID')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('name')
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('tag')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

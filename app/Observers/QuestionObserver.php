@@ -27,7 +27,7 @@ class QuestionObserver
      */
     public function deleted(Question $question): void
     {
-        //Question::recalculatePercentages();
+        Question::recalculatePercentages();
     }
 
     /**

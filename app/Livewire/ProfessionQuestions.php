@@ -50,9 +50,10 @@ class ProfessionQuestions extends Component
                         $tagQuery->where('tag_id', $tagId);
                     });
                 })
+                ->orderByDesc('percentage')
                 ->limit(20)
                 ->get()
-        )->sortByDesc('percentage')->toArray();
+        )->toArray();
     }
 
     public function mount(string $professionId): void

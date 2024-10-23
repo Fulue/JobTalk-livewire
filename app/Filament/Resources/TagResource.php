@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+
 use App\Filament\Resources\TagResource\Pages;
 use App\Filament\Resources\TagResource\RelationManagers;
 use App\Models\Tag;
@@ -72,7 +73,7 @@ class TagResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            QuestionResource\RelationManagers\QuestionsTagRelationManager::class,
         ];
     }
 

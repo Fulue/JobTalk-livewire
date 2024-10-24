@@ -10,6 +10,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -47,7 +48,12 @@ class TagResource extends Resource
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('tag')
+                    ->sortable()
                     ->searchable(),
+                TextInputColumn::make('icon')
+                    ->sortable()
+                    ->searchable()
+                    ->rules(['required', 'max:255']),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -74,6 +80,7 @@ class TagResource extends Resource
     {
         return [
             QuestionResource\RelationManagers\QuestionsTagRelationManager::class,
+            QuestionResource\RelationManagers\TimestampsTagRelationManager::class,
         ];
     }
 

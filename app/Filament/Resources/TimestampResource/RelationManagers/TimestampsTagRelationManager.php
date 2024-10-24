@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Filament\Resources\TimestampResource\RelationManagers;
+namespace App\Filament\Resources\QuestionResource\RelationManagers;
 
-use App\Models\Timestamp;
-use App\Models\User;
-use App\Models\Video;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Collection;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class TimestampsTagRelationManager extends RelationManager
 {
@@ -36,41 +28,23 @@ class TimestampsTagRelationManager extends RelationManager
             ->defaultSort('created_at')
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('pivot.similarity')
-                    ->label('Similarity'),
                 Tables\Columns\TextColumn::make('question_text'),
-                Tables\Columns\TextColumn::make('start_time'),
             ])
-            ->defaultSort('similarity', 'desc')
             ->filters([
                 //
             ])
             ->headerActions([
-                Tables\Actions\Action::make('add')
-                    ->form([
-                        Forms\Components\Select::make('timestamp_id')
-                            ->options(Timestamp::all()->pluck('question_text', 'id'))
-                            ->searchable()
-                            ->native(false)
-                            ->required(),
-                        Forms\Components\TextInput::make('similarity')
-                            ->numeric()
-                            ->step(0.5)
-                            ->suffix('%')
-                            ->required(),
-                    ])
-                    ->action(function (array $data, ): void {
-
-                    })
-                    ->color('info')
-                    ->label('Add Timestamps'),
+                Tables\Actions\AttachAction::make()
+                    ->recordTitleAttribute('question_text')
+                    ->recordSelectSearchColumns(['question_text'])
+                    ->preloadRecordSelect(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\DetachAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DetachBulkAction::make(),
                 ]),
             ]);
     }

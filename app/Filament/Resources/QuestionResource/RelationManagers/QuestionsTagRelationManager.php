@@ -35,7 +35,8 @@ class QuestionsTagRelationManager extends RelationManager
             ])
             ->headerActions([
                 Tables\Actions\AttachAction::make()
-                    ->recordSelectSearchColumns(['title', 'description'])
+                    ->recordTitleAttribute('question')
+                    ->recordSelectSearchColumns(['question'])
                     ->preloadRecordSelect(),
             ])
             ->actions([

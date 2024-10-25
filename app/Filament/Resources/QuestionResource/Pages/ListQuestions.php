@@ -17,6 +17,16 @@ class ListQuestions extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('recalculatePercentages')
+                ->label('Recalculate Percentages')
+                ->action(function (): void {
+                    // Вызываем метод пересчета процентов для всех вопросов
+                    Question::recalculatePercentages();
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->modalHeading('Confirm Recalculation'),
+
             Actions\Action::make('import')
                 ->form([
                     Select::make('profession_id')

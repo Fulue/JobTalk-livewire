@@ -88,21 +88,25 @@ class Question extends Model
      *
      * @return void
      */
-    public static function recalculatePercentages()
+    public static function recalculatePercentages(): void
     {
-        // Получаем все вопросы с количеством связанных таймкодов
-        $questions = Question::withCount('timestamps')->get();
+        // Получаем все вопросы с количеством связанных таймкодов и тегов
+        $questions = Question::withCount(['timestamps', 'tags'])->get();
 
         // Находим максимальное и минимальное количество таймкодов
         $maxTimestampsCount = $questions->max('timestamps_count');
         $minTimestampsCount = $questions->min('timestamps_count');
 
-        // Определяем диапазон процентов
-        $minPercentage = 30;
-        $maxPercentage = 95;
+        // Находим максимальное и минимальное количество тегов
+        $maxTagsCount = $questions->max('tags_count');
+        $minTagsCount = $questions->min('tags_count');
 
-        // Если нет таймкодов, устанавливаем процент 0 для всех вопросов
-        if ($maxTimestampsCount == 0) {
+        // Определяем диапазон процентов
+        $minPercentage = 10.4;
+        $maxPercentage = 96.3;
+
+        // Если нет ни таймкодов, ни тегов, устанавливаем процент 0 для всех вопросов
+        if ($maxTimestampsCount == 0 && $maxTagsCount == 0) {
             foreach ($questions as $question) {
                 $question->update(['percentage' => 0]);
             }
@@ -111,13 +115,34 @@ class Question extends Model
 
         // Рассчитываем проценты для каждого вопроса
         foreach ($questions as $question) {
-            if ($maxTimestampsCount == $minTimestampsCount) {
-                // Если все вопросы имеют одинаковое количество таймкодов
-                $percentage = $maxPercentage;
-            } else {
-                // Пропорциональный расчет процентов между 70 и 90%
-                $percentage = $minPercentage + (($question->timestamps_count - $minTimestampsCount) / ($maxTimestampsCount - $minTimestampsCount)) * ($maxPercentage - $minPercentage);
+
+            // Получение данных о Similarity для каждого вопроса отдельно
+            $timestamps = $question->timestamps()->withPivot('similarity')->get();
+
+            $weightedSum = 0;
+            $totalWeight = 0;
+
+            foreach ($timestamps as $timestamp) {
+                $weightedSum += $timestamp->pivot->similarity;
+                $totalWeight += 100; // Адаптируйте это значение в соответствии с вашей шкалой Similarity
             }
+
+            $normalizedSimilarity = $totalWeight > 0 ? $weightedSum / $totalWeight : 0;
+
+            // Нормализуем вес таймкодов и тегов для расчета
+            $normalizedTimestamps = $maxTimestampsCount == $minTimestampsCount
+                ? 1
+                : ($question->timestamps_count - $minTimestampsCount) / ($maxTimestampsCount - $minTimestampsCount);
+
+            $normalizedTags = $maxTagsCount == $minTagsCount
+                ? 1
+                : ($question->tags_count - $minTagsCount) / ($maxTagsCount - $minTagsCount);
+
+            // Комбинируем вес таймкодов и тегов (например, 70% таймкоды, 30% теги)
+            $combinedWeight = 0.5 * $normalizedTimestamps + 0.3 * $normalizedTags + 0.2 * $normalizedSimilarity;
+
+            // Пропорциональный расчет процентов между 30% и 95%
+            $percentage = $minPercentage + $combinedWeight * ($maxPercentage - $minPercentage);
 
             // Обновляем процент для каждого вопроса
             $question->update(['percentage' => $percentage]);

@@ -17,20 +17,41 @@
     @if(count($this->questions) == 0)
         <x-profession-questions.empty-list />
     @else
-        <div class="max-w-[85rem] py-10 lg:py-14 mx-auto">
-            <div class="grid md:grid-cols-2 gap-3 sm:gap-6">
-                @foreach($this->questions as $question)
-                    <x-profession-questions.question-item
-                        :questionId="$question['id']"
-                        :question="$question['question']"
-                        :percentage="$question['percentage']"
-                        :tags="$question['tags']"
-                        :level="$question['level']"
-                        :level-icon="$question['level_icon']"
-                    />
-                @endforeach
-            </div>
+        <div class="max-w-[85rem] py-3 sm:py-6 mx-auto">
+            @if($this->list)
+                <div class="grid gap-3 sm:gap-6">
+                    @foreach($this->questions as $question)
+                        <x-profession-questions.question-item-list
+                            :questionId="$question['id']"
+                            :question="$question['question']"
+                            :percentage="$question['percentage']"
+                            :tags="$question['tags']"
+                            :level="$question['level']"
+                            :level-icon="$question['level_icon']"
+                        />
+                    @endforeach
+                </div>
+            @else
+                <div class="grid md:grid-cols-2 gap-3 sm:gap-6">
+                    @foreach($this->questions as $question)
+                        <x-profession-questions.question-item
+                            :questionId="$question['id']"
+                            :question="$question['question']"
+                            :percentage="$question['percentage']"
+                            :tags="$question['tags']"
+                            :level="$question['level']"
+                            :level-icon="$question['level_icon']"
+                        />
+                    @endforeach
+                </div>
+            @endif
         </div>
     @endif
+
+    <x-ui.pagination
+        :lastPage="$this->lastPage"
+        :currentPage="$this->currentPage"
+        clickPage="newPage"
+    />
 
 </div>

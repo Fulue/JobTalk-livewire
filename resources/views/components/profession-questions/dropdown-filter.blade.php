@@ -1,4 +1,4 @@
-<div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+<div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6 justify-between">
     <div class="relative w-full">
         <input
             type="text"
@@ -9,7 +9,7 @@
             <x-mdi-magnify class="shrink-0 size-4 text-gray-500 dark:text-neutral-500"/>
         </div>
     </div>
-    <div class="flex justify-end gap-3 items-center">
+    <div class="flex justify-end gap-3 sm:gap-6 items-center">
         @if($filtered)
             <button
                 x-on:click.prevent="$wire.filterClear()"
@@ -19,7 +19,7 @@
                 Сбросить
             </button>
         @endif
-        <div class="flex gap-3">
+        <div class="flex gap-3 sm:gap-6">
             <div class="hs-dropdown [--strategy:absolute] [--flip:false] [--placement:bottom-right] hs-dropdown-example relative inline-flex">
                 <button
                         id="hs-dropdown-example"
@@ -39,7 +39,7 @@
                         aria-labelledby="hs-dropdown-transform-style"
                 >
                     <div class="hs-dropdown-open:ease-in hs-dropdown-open:opacity-100 hs-dropdown-open:scale-100 transition ease-out opacity-0 scale-95 duration-200 mt-2 origin-top-left min-w-60 bg-white shadow-md rounded-lg dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700" data-hs-transition>
-                        <div class="p-1 space-y-0.5">
+                        <div class="p-1 max-h-96 overflow-y-auto space-y-0.5">
                             @if(count($tags) == 0)
                                 <p class="py-2 px-3 text-sm text-gray-600 dark:text-neutral-400">Темы не найдены</p>
                             @endif

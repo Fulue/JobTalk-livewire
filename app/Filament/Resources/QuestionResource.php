@@ -10,6 +10,8 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class QuestionResource extends Resource
@@ -50,6 +52,9 @@ class QuestionResource extends Resource
                 Tables\Columns\TextColumn::make('percentage')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('profession.profession')
+                    ->sortable()
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -60,7 +65,8 @@ class QuestionResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('profession')
+                    ->relationship('profession', 'profession')
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

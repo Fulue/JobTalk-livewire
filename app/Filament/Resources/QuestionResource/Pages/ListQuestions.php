@@ -17,6 +17,16 @@ class ListQuestions extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('recalculatePercentages')
+                ->label('Recalculate Percentages')
+                ->action(function (): void {
+                    // Вызываем метод пересчета процентов для всех вопросов
+                    Question::recalculatePercentages();
+                })
+                ->color('success')
+                ->requiresConfirmation()
+                ->modalHeading('Confirm Recalculation'),
+
             Actions\Action::make('import')
                 ->form([
                     Select::make('profession_id')
@@ -38,7 +48,7 @@ class ListQuestions extends ListRecords
                     }
 
                     // Регулярное выражение для извлечения таймкода и текста вопроса
-                    $pattern = '/^(?P<start_time>\d{2}:\d{2}:\d{2},\d{3}) - (?P<question_text>.+)$/';
+                    $pattern = '/^(?P<start_time>\d{1,2}:\d{2}:\d{2},\d{3}) - (?P<question_text>.+)$/';
 
                     // Обрабатываем каждую запись
                     collect($json)->each(function ($record) use ($pattern, $data) {
@@ -56,8 +66,10 @@ class ListQuestions extends ListRecords
                                 $startTime = $matches['start_time'];
                                 $questionText = $matches['question_text'];
 
-                                // Ищем существующий таймкод по тексту вопроса (без таймкода)
-                                $timestamp = Timestamp::where('question_text', $questionText)
+                                // Ищем существующий таймкод по тексту вопроса и времени начала
+                                $timestamp = Timestamp::query()
+                                    ->where('question_text', $questionText)
+                                    ->where('start_time', $startTime)
                                     ->first();
 
                                 // Если таймкод существует, обновляем его поля
@@ -68,9 +80,10 @@ class ListQuestions extends ListRecords
                                 }
                             }
                         }
-
-                        Question::recalculatePercentages();
                     });
+
+                    // Вызываем метод пересчета процентов для всех вопросов
+                    Question::recalculatePercentages();
                 })
                 ->color('info')
                 ->label('Import Json'),

@@ -90,64 +90,81 @@ class Question extends Model
      */
     public static function recalculatePercentages(): void
     {
-        // Получаем все вопросы с количеством связанных таймкодов и тегов
-        $questions = Question::withCount(['timestamps', 'tags'])->get();
+        // Получаем все уникальные профессии из вопросов
+        $professions = Question::select('profession_id')->distinct()->pluck('profession_id');
 
-        // Находим максимальное и минимальное количество таймкодов
-        $maxTimestampsCount = $questions->max('timestamps_count');
-        $minTimestampsCount = $questions->min('timestamps_count');
+        foreach ($professions as $professionId) {
+            // Получаем все вопросы по конкретной профессии с количеством связанных таймкодов и тегов
+            $questions = Question::where('profession_id', $professionId)
+                ->withCount(['timestamps', 'tags'])
+                ->get();
 
-        // Находим максимальное и минимальное количество тегов
-        $maxTagsCount = $questions->max('tags_count');
-        $minTagsCount = $questions->min('tags_count');
+            // Находим максимальное и минимальное количество таймкодов и тегов для данной профессии
+            $maxTimestampsCount = $questions->max('timestamps_count');
+            $minTimestampsCount = $questions->min('timestamps_count');
+            $maxTagsCount = $questions->max('tags_count');
+            $minTagsCount = $questions->min('tags_count');
 
-        // Определяем диапазон процентов
-        $minPercentage = 10.4;
-        $maxPercentage = 96.3;
+            $minPercentage = 10.4;
+            $maxPercentage = 96.3;
 
-        // Если нет ни таймкодов, ни тегов, устанавливаем процент 0 для всех вопросов
-        if ($maxTimestampsCount == 0 && $maxTagsCount == 0) {
+            // Если нет ни таймкодов, ни тегов для данной профессии, устанавливаем процент 0 для всех вопросов
+            if ($maxTimestampsCount == 0 && $maxTagsCount == 0) {
+                foreach ($questions as $question) {
+                    $question->update(['percentage' => 0]);
+                }
+                continue;
+            }
+
+            // Рассчитываем проценты для каждого вопроса
             foreach ($questions as $question) {
-                $question->update(['percentage' => 0]);
+                // Получение данных о Similarity для каждого вопроса отдельно
+                $timestamps = $question->timestamps()->withPivot('similarity')->get();
+
+                $weightedSum = 0;
+                $totalWeight = 0;
+
+                foreach ($timestamps as $timestamp) {
+                    $similarity = $timestamp->pivot->similarity;
+
+                    // Увеличиваем влияние таймкодов с высокой Similarity
+                    if ($question->timestamps_count > 2 && $similarity > 85 && $similarity < 95) {
+                        $similarity *= 2; // Увеличиваем вес на 50%
+                    }
+
+                    $weightedSum += $similarity;
+                    $totalWeight += 100; // Адаптируйте это значение в соответствии с вашей шкалой Similarity
+                }
+
+                // Нормализуем Similarity
+                $normalizedSimilarity = $totalWeight > 0 ? $weightedSum / $totalWeight : 0;
+
+
+                // Нормализуем количество таймкодов для данной профессии
+                $normalizedTimestamps = ($maxTimestampsCount == $minTimestampsCount)
+                    ? 0
+                    : ($question->timestamps_count - $minTimestampsCount) / ($maxTimestampsCount - $minTimestampsCount);
+
+                // Нормализуем количество тегов для данной профессии
+                $normalizedTags = ($maxTagsCount == $minTagsCount)
+                    ? 0
+                    : ($question->tags_count - $minTagsCount) / ($maxTagsCount - $minTagsCount);
+
+                // Комбинируем вес таймкодов, тегов и Similarity (например, 50% таймкоды, 30% теги, 20% Similarity)
+                $combinedWeight = 0.4 * $normalizedTimestamps + 0.1 * $normalizedTags + 0.5 * $normalizedSimilarity;
+
+                // Пропорциональный расчет процентов между minPercentage и maxPercentage
+                $percentage = $minPercentage + $combinedWeight * ($maxPercentage - $minPercentage);
+
+                // Округляем процент до двух десятичных знаков
+                $percentage = round($percentage, 2);
+
+                // Обновляем процент для каждого вопроса
+                $question->update(['percentage' => $percentage]);
             }
-            return;
-        }
-
-        // Рассчитываем проценты для каждого вопроса
-        foreach ($questions as $question) {
-
-            // Получение данных о Similarity для каждого вопроса отдельно
-            $timestamps = $question->timestamps()->withPivot('similarity')->get();
-
-            $weightedSum = 0;
-            $totalWeight = 0;
-
-            foreach ($timestamps as $timestamp) {
-                $weightedSum += $timestamp->pivot->similarity;
-                $totalWeight += 100; // Адаптируйте это значение в соответствии с вашей шкалой Similarity
-            }
-
-            $normalizedSimilarity = $totalWeight > 0 ? $weightedSum / $totalWeight : 0;
-
-            // Нормализуем вес таймкодов и тегов для расчета
-            $normalizedTimestamps = $maxTimestampsCount == $minTimestampsCount
-                ? 1
-                : ($question->timestamps_count - $minTimestampsCount) / ($maxTimestampsCount - $minTimestampsCount);
-
-            $normalizedTags = $maxTagsCount == $minTagsCount
-                ? 1
-                : ($question->tags_count - $minTagsCount) / ($maxTagsCount - $minTagsCount);
-
-            // Комбинируем вес таймкодов и тегов (например, 70% таймкоды, 30% теги)
-            $combinedWeight = 0.5 * $normalizedTimestamps + 0.3 * $normalizedTags + 0.2 * $normalizedSimilarity;
-
-            // Пропорциональный расчет процентов между 30% и 95%
-            $percentage = $minPercentage + $combinedWeight * ($maxPercentage - $minPercentage);
-
-            // Обновляем процент для каждого вопроса
-            $question->update(['percentage' => $percentage]);
         }
     }
+
 
 
 }

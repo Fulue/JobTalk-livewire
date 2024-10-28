@@ -43,11 +43,13 @@ class ListTags extends ListRecords
                             // Обрабатываем теги
                             collect($record['tags'])->each(function ($tagName) use ($question) {
                                 // Ищем или создаем тег
-                                $tag = Tag::firstOrCreate([
-                                    'tag' => $tagName,
-                                    'color' => 'info',
-                                    'icon' => 'heroicon-o-tag',
-                                ]);
+                                $tag = Tag::firstOrCreate(
+                                    ['tag' => $tagName],
+                                    [
+                                        'color' => 'info',
+                                        'icon' => 'heroicon-o-tag',
+                                    ]
+                                );
 
                                 // Присоединяем тег к вопросу
                                 $question->tags()->attach($tag);
@@ -102,6 +104,7 @@ class ListTags extends ListRecords
             Actions\Action::make('import')
                 ->form([
                     Textarea::make('json')
+                        ->helperText('Format: {"tag": "string", "color": "string", "icon": "string"}')
                         ->rows(10)
                         ->cols(20)
                         ->required()
